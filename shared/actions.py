@@ -577,6 +577,30 @@ async def clear_seed(*a):
     if await any_active_duress_ux():
         return await ux_aborted()
 
+    if not await ux_confirm('Wipe seed words. '
+                            'All funds will be lost. '
+                            'You better have a backup of the seed words.'):
+        return await ux_aborted()
+
+    ch = await ux_show_story('''Are you REALLY sure though???\n\n\
+This action will certainly cause you to lose all funds associated with this wallet, \
+unless you have a backup of the seed words and know how to import them into a \
+new wallet.\n\nPress (4) to prove you read to the end of this message and accept all \
+consequences.''', escape='4')
+    if ch != '4':
+        return await ux_aborted()
+
+    seed.clear_seed()
+    # NOT REACHED -- reset happens
+
+async def clear_seed_and_reset(*a):
+    # Erase the seed words, and private key from this wallet!
+    # This is super dangerous for the customer's money.
+    import seed
+
+    if await any_active_duress_ux():
+        return await ux_aborted()
+
     if not await ux_confirm('Wipe seed words and reset wallet. '
                             'All funds will be lost. '
                             'You better have a backup of the seed words. '

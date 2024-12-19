@@ -274,9 +274,10 @@ SeedXORMenu = [
 SeedFunctionsMenu = [
     MenuItem('View Seed Words', f=view_seed_words),     # text is a little wrong sometimes, rare
     MenuItem('Seed XOR', menu=SeedXORMenu),
-    MenuItem("Destroy Seed", f=clear_seed, predicate=has_real_secret),
     MenuItem('Lock Down Seed', f=convert_ephemeral_to_master, predicate=is_tmp),
     MenuItem('Export SeedQR', f=export_seedqr, predicate=word_based_seed),
+    MenuItem("Destroy Seed", f=clear_seed, predicate=has_real_secret),
+    MenuItem("Destroy Seed And Reset", f=clear_seed_and_reset, predicate=has_real_secret),
 ]
 
 DangerZoneMenu = [
